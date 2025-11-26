@@ -60,3 +60,5 @@ def prestamos_multa(request):
             mensaje = 'Retraso grave, revisar con administración'
 
     return Response({'diasRetraso': dias, 'multa': multa, 'mensaje': mensaje})
+
+
