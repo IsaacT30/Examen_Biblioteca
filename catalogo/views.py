@@ -34,31 +34,5 @@ def prestamos_semana(request):
     return Response({'totalPrestamos': total, 'promedioDiario': promedio, 'mensaje': mensaje})
 
 
-@api_view(['POST'])
-def prestamos_multa(request):
-    data = request.data
-    try:
-        dias = int(data.get('diasRetraso', 0))
-    except (TypeError, ValueError):
-        return Response({'detail': 'diasRetraso debe ser un número entero'}, status=status.HTTP_400_BAD_REQUEST)
-
-    try:
-        multa_por_dia = float(data.get('multaPorDia', 0))
-    except (TypeError, ValueError):
-        return Response({'detail': 'multaPorDia debe ser un número'}, status=status.HTTP_400_BAD_REQUEST)
-
-    if dias <= 0:
-        multa = 0
-        mensaje = 'Sin retraso'
-    else:
-        multa = dias * multa_por_dia
-        if multa <= 5:
-            mensaje = 'Retraso leve'
-        elif 5 < multa <= 15:
-            mensaje = 'Retraso moderado'
-        else:
-            mensaje = 'Retraso grave, revisar con administración'
-
-    return Response({'diasRetraso': dias, 'multa': multa, 'mensaje': mensaje})
 
 
